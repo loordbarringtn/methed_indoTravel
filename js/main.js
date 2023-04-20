@@ -3,65 +3,18 @@ const setDeadline = (setDeadline) => {
   timer.dataset.timerDeadline = setDeadline;
 };
 
-const defineDayWords = (numDays) => {
-  const dayDeclension = ["день", "дня", "дней"];
-  let lastDigit = numDays % 10;
-
-  if (numDays >= 11 && numDays <= 14) {
-    return dayDeclension[2];
-  } else if (lastDigit === 1) {
-    return dayDeclension[0];
-  } else if (lastDigit >= 2 && lastDigit <= 4) {
-    return dayDeclension[1];
-  } else {
-    return dayDeclension[2];
-  }
-};
-
-const defineHoursWords = (numHours) => {
-  const hoursDeclension = ["час", "часа", "часов"];
-  let lastDigit = numHours % 10;
-
-  if (numHours >= 11 && numHours <= 14) {
-    return hoursDeclension[2];
-  } else if (lastDigit === 1) {
-    return hoursDeclension[0];
-  } else if (lastDigit >= 2 && lastDigit <= 4) {
-    return hoursDeclension[1];
-  } else {
-    return hoursDeclension[2];
-  }
-};
-
-const defineMinutesWords = (numMinutes) => {
-  const minutesDeclension = ["минута", "минуты", "минут"];
-  let lastDigit = numMinutes % 10;
-
-  if (numMinutes >= 11 && numMinutes <= 14) {
-    return minutesDeclension[2];
-  } else if (lastDigit === 1) {
-    return minutesDeclension[0];
-  } else if (lastDigit >= 2 && lastDigit <= 4) {
-    return minutesDeclension[1];
-  } else {
-    return minutesDeclension[2];
-  }
-};
-
-const defineSecondsWords = (numSeconds) => {
-  const secondsDeclension = ["секунда", "секунды", "секунд"];
-  let lastDigit = numSeconds % 10;
-
-  if (numSeconds >= 11 && numSeconds <= 14) {
-    return secondsDeclension[2];
-  } else if (lastDigit === 1) {
-    return secondsDeclension[0];
-  } else if (lastDigit >= 2 && lastDigit <= 4) {
-    return secondsDeclension[1];
-  } else {
-    return secondsDeclension[2];
-  }
-};
+const defineWords = (number, words) => {
+    const lastDigit = number % 10;    
+    if (number >= 11 && number <= 14) {
+      return words[2];
+    } else if (lastDigit === 1) {
+      return words[0];
+    } else if (lastDigit >= 2 && lastDigit <= 4) {
+      return words[1];
+    } else {
+      return words[2];
+    }
+  };
 
 const timer = () => {
   const timer = document.querySelector(".timer");
@@ -104,11 +57,11 @@ const timer = () => {
     let timer = getTimeRemaining();
 
     daysValue.textContent = timer.days;
-    daysLabel.textContent = defineDayWords(timer.days);
+    daysLabel.textContent = defineWords(timer.days, ["день", "дня", "дней"]);
     hoursValue.textContent = timer.hours;
-    hoursLabel.textContent = defineHoursWords(timer.hours);
+    hoursLabel.textContent = defineWords(timer.hours, ["час", "часа", "часов"]);
     minutesValue.textContent = timer.minutes;
-    minutesLabel.textContent = defineMinutesWords(timer.minutes);
+    minutesLabel.textContent = defineWords(timer.minutes, ["минута", "минуты", "минут"]);
 
     let interValId = setInterval(updateClock, 60000);
 
@@ -121,11 +74,11 @@ const timer = () => {
       timerText.style.display = "none";
     } else if (timer.timeRemaining / 3600 <= 24) {
       daysValue.textContent = timer.hours;
-      daysLabel.textContent = defineHoursWords(timer.hours);
+      daysLabel.textContent = defineWords(timer.hours, ["час", "часа", "часов"]);
       hoursValue.textContent = timer.minutes;
-      hoursLabel.textContent = defineMinutesWords(timer.minutes);
+      hoursLabel.textContent = defineWords(timer.minutes, ["минута", "минуты", "минут"]);
       minutesValue.textContent = timer.seconds;
-      minutesLabel.textContent = defineSecondsWords(timer.seconds);
+      minutesLabel.textContent = defineWords(timer.seconds, ["секунда", "секунды", "секунд"]);
       interValId = setInterval(updateClock, 1000);
     }
   };
@@ -145,3 +98,7 @@ setDeadline('2023-04-30');
 // setDeadline("2023-04-21");
 // setDeadline("2023-04-20 11:45:00");
 timer();
+
+
+
+
