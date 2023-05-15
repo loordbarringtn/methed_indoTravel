@@ -1,10 +1,12 @@
-import { setDeadline, timer } from "./timer.js";
+import { setDeadline, timer, setPlusThreeDays } from "./timer.js";
 import { eventController } from "./evenListener.js";
+import { animateJet } from "./animation.js";  
 
 const start = () => {
-  setDeadline("2023-05-25 00:45:00" );
+  setDeadline(setPlusThreeDays());
   timer();
   eventController();
+  requestAnimationFrame(  animateJet);
 };
 
 window.start = start;

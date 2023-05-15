@@ -107,17 +107,10 @@ const timer = () => {
   intervalId = setInterval(updateClock, 60000);
 };
 
-//Для тестирования
-// setDeadline('2023-04-30');
-// setDeadline('2023-04-28 23:59:59');
-// setDeadline('2023-04-28 21:59:59');
-// setDeadline('2023-04-28 21:37:59');
-// setDeadline("2023-04-20 23:59:59");
-// setDeadline("2023-05-10");
-// setDeadline(new Date().toLocaleDateString());
-// setDeadline(new Date().toISOString().slice(0, 10));
-// setDeadline("2023-04-20 14:45:00");
-// setDeadline("2023-04-21 11:45:00");
-// setDeadline("2023-04-20 11:45:00");
+const setPlusThreeDays = () => {
+  let currentDate = new Date();
+  let futureDate = new Date(currentDate.getTime() + (3 * 24 * 60 * 60 * 1000));
+  return futureDate;
+};
 
-export { setDeadline, timer };
+export { setDeadline, timer, setPlusThreeDays };
