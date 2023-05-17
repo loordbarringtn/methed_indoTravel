@@ -42,6 +42,7 @@ const handleWindowResize = () => {
   }
 };
 
+
 const animateBurgerMenu = (timeStamp) => {
   startTime = startTime ||= timeStamp;
   const progress = (timeStamp - startTime) / durationOpacity;
@@ -55,6 +56,19 @@ const animateBurgerMenu = (timeStamp) => {
   }
 };
 
+const animateBurgerMenuClose = (timeStamp) => {
+  startTime = startTime ||= timeStamp;
+  const progress = 1 - (timeStamp - startTime) / durationOpacity;
+  headerMenu.style.opacity = progress;
+
+  if (progress > 0) {
+    requestAnimationFrame(animateBurgerMenuClose);
+  } else {
+    startTime = null;
+    headerMenu.style.opacity = 0;
+  }
+};
+
 window.addEventListener("scroll", () => {
   requestAnimationFrame(animateJet);
 });
@@ -63,4 +77,4 @@ window.addEventListener("resize", () => {
   handleWindowResize();
 });
 
-export { animateJet, animateBurgerMenu };
+export { animateJet, animateBurgerMenu, animateBurgerMenuClose };

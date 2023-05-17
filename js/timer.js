@@ -8,6 +8,7 @@ const daysValue = document.querySelector(".timer__count_days");
 const hoursValue = document.querySelector(".timer__count_hours");
 const minutesValue = document.querySelector(".timer__count_minutes");
 
+
 const setDeadline = (deadLineTime) => {
   timerSection.dataset.timerDeadline = deadLineTime;
 };

@@ -1,11 +1,10 @@
-import { animateBurgerMenu } from "./animation.js";
+import { animateBurgerMenu, animateBurgerMenuClose } from "./animation.js";
 
 const accordButtons = document.querySelectorAll(".travel__item-title");
 const travelItem = document.querySelectorAll(".travel__item");
 const textWrapper = document.querySelectorAll(".travel__item-text-wrapper");
 const headerMenuButton = document.querySelector(".header__menu-button");
 const headerMenu = document.querySelector(".header__menu");
-const headerMenuActive = document.querySelector(".header__menu_active");
 const body = document.querySelector("body");
 let textWrapperHeight = null;
 
@@ -38,11 +37,17 @@ const eventController = () => {
     const target = e.target;
     if (target !== headerMenuButton && target === headerMenu) return;
     if (target === headerMenuButton) {
+      headerMenu.style.opacity = 0;
       headerMenu.classList.toggle("header__menu_active");
       requestAnimationFrame(animateBurgerMenu);
-    } else headerMenu.classList.remove("header__menu_active");
+    } else {
+      setTimeout(() => {
+        headerMenu.classList.remove("header__menu_active");
+      }, 400);
+      requestAnimationFrame(animateBurgerMenuClose);
+    }
     if (target.tagName === "A") return false;
   });
 };
 
-export { eventController, headerMenuActive, headerMenu };
+export { eventController, headerMenu };
