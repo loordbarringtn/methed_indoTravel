@@ -6,14 +6,11 @@ import { updateDateOptions } from "./fetchData.js";
 const start = () => {
   setDeadline(setPlusThreeDays());
   timer();
-  // eventController();
   clearReservationDate();
   requestAnimationFrame(animateJet);
   updateDateOptions(tourDates, "date");
   updateDateOptions(reservationDates, "date");
   eventController();
-
-
 };
 
 window.start = start;

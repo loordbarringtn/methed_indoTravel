@@ -1,5 +1,6 @@
 import { animateBurgerMenu, animateBurgerMenuClose } from "./animation.js";
 import { updatePeopleOptions, getData } from "./fetchData.js";
+import { httpRequest } from "./requests.js";
 
 const accordButtons = document.querySelectorAll(".travel__item-title");
 const travelItemList = document.querySelectorAll(".travel__item");
@@ -13,6 +14,13 @@ const reservationDatesList = document.getElementById("reservation__date");
 const reservationPeopleList = document.getElementById("reservation__people");
 const reservationData = document.querySelector(".reservation__data");
 const reservationPrice = document.querySelector(".reservation__price");
+const form = document.querySelector(".reservation__form");
+const formTitle = document.querySelector(".reservation__title");
+const footerForm = document.querySelector(".footer__form");
+const footerText = document.querySelector(".footer__text");
+const footerInput = document.querySelector(".footer__input");
+const footerTitle = document.querySelector(".footer__form-title");
+
 let textWrapperHeight = null;
 
 const showReservationDates = () => {
@@ -93,6 +101,62 @@ const eventController = () => {
 const clearReservationDate = () => {
   reservationData.textContent = null;
 };
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const jsonData = Object.fromEntries(formData.entries());
+  jsonData.name = document.getElementById("reservation__name").value;
+  jsonData.phone = document.getElementById("reservation__phone").value;
+  httpRequest("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    body: {
+      title: formTitle.textContent,
+      body: JSON.stringify(jsonData),
+    },
+    callback(error, data) {
+      if (error) {
+        const errorMessage = document.createElement("h2");
+        errorMessage.style.color = "red";
+        errorMessage.textContent = error;
+        form.appendChild(errorMessage);
+        return;
+      } else {
+        const statusMessage = document.createElement("p");
+        statusMessage.textContent = `Запрос на бронирование отправлен, номер запроса: ${data.id}`;
+        form.appendChild(statusMessage);
+      }
+    },
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+});
+
+footerForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  httpRequest("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    body: {
+      title: footerTitle.textContent,
+      body: footerInput.value,
+    },
+    callback(error, data) {
+      if (error) {
+        footerText.style.color = "red";
+        footerText.textContent = error;
+        return;
+      } else {
+        footerText.textContent = `Наши менеджеры свяжутся с вами в течении 3-х рабочих дней`;
+        footerText.style.border = "2px solid red";
+        footerText.style.padding = "10px";
+      }
+    },
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+});
 
 export {
   eventController,
